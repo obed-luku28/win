@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+    <title>Win-money</title>
+</head>
+<body>
+
+    <main class="container">
+        <section class="card">
+            <h1>Créer un compte</h1>
+            <p class="subtitle">
+                Inscris-toi pour continuer.
+            </p>
+            <form id="signup-form">
+        <label for="nom">Nom</label>
+        <input
+          type="text"
+          id="nom"
+          name="nom"
+          placeholder="Entre ton nom"
+          autocomplete="name"
+          required
+        >
+
+        <label for="email">Adresse e-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="exemple@email.com"
+          autocomplete="email"
+          required
+        >
+
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="8 caractères minimum"
+          minlength="8"
+          autocomplete="new-password"
+          required
+        >
+
+        <button type="submit" id="submit-btn">
+          Créer mon compte
+        </button>
+      </form>
+
+      <p id="message" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+    
+</body>
+</html>
